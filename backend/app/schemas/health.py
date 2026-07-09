@@ -8,6 +8,7 @@ class HealthResponse(BaseModel):
     service: str
     version: str
 
+
 class ReadinessResponse(BaseModel):
     status: Literal["ok"]
-    database:Literal["mssql"]
+    database: Literal["mssql"]

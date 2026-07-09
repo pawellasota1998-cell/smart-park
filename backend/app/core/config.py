@@ -7,6 +7,7 @@ from sqlalchemy import URL
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
+
 class Settings(BaseSettings):
     app_name: str = "Euro Park API"
     app_service_name: str = "euro-park-api"
@@ -46,16 +47,15 @@ class Settings(BaseSettings):
                 "driver": self.db_driver,
                 "Encrypt": "yes" if self.db_encrypt else "no",
                 "TrustServerCertificate": (
-                    "yes"
-                    if self.db_trust_server_certificate
-                    else "no"
+                    "yes" if self.db_trust_server_certificate else "no"
                 ),
             },
         )
 
+
 @lru_cache
 def get_settings() -> Settings:
-    return  Settings()
+    return Settings()
 
 
 settings = get_settings()
