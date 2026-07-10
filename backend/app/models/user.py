@@ -60,9 +60,9 @@ class User(Base):
         onupdate=func.sysutcdatetime(),
     )
     applications: Mapped[list[ParkingApplication]] = relationship(
-        back_populates="user", foreign_keys="ParkingAppliaction.user_id"
+        back_populates="user", foreign_keys="ParkingApplication.user_id"
     )
     reviewed_applications: Mapped[list[ParkingApplication]] = relationship(
         back_populates="reviewed_by",
-        foreign_keys="ParkingAppliaction.reviewed_by_user_id",
+        foreign_keys="ParkingApplication.reviewed_by_user_id",
     )
