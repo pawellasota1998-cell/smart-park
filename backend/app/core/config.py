@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -26,6 +27,14 @@ class Settings(BaseSettings):
     db_driver: str = "ODBC Driver 18 for SQL Server"
     db_encrypt: bool = True
     db_trust_server_certificate: bool = True
+
+    jwt_secret_key: SecretStr
+    jwt_algorithm: Literal["HS256"] = "HS256"
+    jwt_issuer: str = "euro-park-api"
+    jwt_audience: str = "euro-park-client"
+
+    access_token_expire_minutes: int = 15
+    refresh_token_expire_days: int = 7
 
     model_config = SettingsConfigDict(
         env_file=PROJECT_ROOT / ".env",
