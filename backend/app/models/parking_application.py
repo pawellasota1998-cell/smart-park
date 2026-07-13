@@ -40,17 +40,13 @@ class ParkingApplication(Base):
         ),
     )
 
-    id: Mapped[int] = mapped_column(
-        Integer, Identity(start=1, increment=1), primary_key=True
-    )
-    user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id"), nullable=False, index=True
-    )
+    id: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
     registration_number: Mapped[str] = mapped_column(
         Unicode(15),
         nullable=False,
     )
-    prefered_floor: Mapped[int] = mapped_column(
+    preferred_floor: Mapped[int] = mapped_column(
         SmallInteger,
         nullable=False,
     )
@@ -90,9 +86,5 @@ class ParkingApplication(Base):
         server_default=text("SYSUTCDATETIME()"),
         onupdate=func.sysutcdatetime(),
     )
-    user: Mapped[User] = relationship(
-        back_populates="applications", foreign_keys=[user_id]
-    )
-    reviewed_by: Mapped[User] = relationship(
-        back_populates="reviewed_applications", foreign_keys=[reviewed_by_user_id]
-    )
+    user: Mapped[User] = relationship(back_populates="applications", foreign_keys=[user_id])
+    reviewed_by: Mapped[User] = relationship(back_populates="reviewed_applications", foreign_keys=[reviewed_by_user_id])

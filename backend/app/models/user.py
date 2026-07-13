@@ -20,14 +20,13 @@ from app.models.enums import UserRole
 
 if TYPE_CHECKING:
     from app.models.parking_application import ParkingApplication
+    from app.models.refresh_token import RefreshToken
 
 
 class User(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(
-        Integer, Identity(start=1, increment=1), primary_key=True
-    )
+    id: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
     email: Mapped[str] = mapped_column(Unicode(255), nullable=False, unique=True)
     password_hash: Mapped[str] = mapped_column(Unicode(255), nullable=True)
     first_name: Mapped[str] = mapped_column(Unicode(100), nullable=False)
@@ -45,9 +44,7 @@ class User(Base):
         default=UserRole.USER,
         server_default=text("'USER'"),
     )
-    is_active: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=True, server_default=text("1")
-    )
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True, server_default=text("1"))
     created_at: Mapped[datetime] = mapped_column(
         DATETIME2(precision=6),
         nullable=False,
@@ -60,9 +57,12 @@ class User(Base):
         onupdate=func.sysutcdatetime(),
     )
     applications: Mapped[list[ParkingApplication]] = relationship(
-        back_populates="user", foreign_keys="ParkingAppliaction.user_id"
+        back_populates="user", foreign_keys="ParkingApplication.user_id"
     )
     reviewed_applications: Mapped[list[ParkingApplication]] = relationship(
         back_populates="reviewed_by",
-        foreign_keys="ParkingAppliaction.reviewed_by_user_id",
+        foreign_keys="ParkingApplication.reviewed_by_user_id",
+    )
+    refresh_tokens: Mapped[list[RefreshToken]] = relationship(
+        back_populates="user",
     )
