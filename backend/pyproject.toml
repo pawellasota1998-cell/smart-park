@@ -5,7 +5,7 @@ description = "Backend API for Euro Park parking management system"
 requires-python = ">=3.12"
 
 [tool.ruff]
-line-length = 88
+line-length = 120
 target-version = "py312"
 
 [tool.ruff.lint]

@@ -62,8 +62,7 @@ def register(
     response_model=TokenResponse,
     status_code=status.HTTP_200_OK,
     summary="Refresh token pair",
-    description=" Rotates a refresh token and returns a "
-    "new access token and refresh token.",
+    description=" Rotates a refresh token and returns a new access token and refresh token.",
 )
 def refresh_token(
     request_data: RefreshTokenRequest,
@@ -153,9 +152,7 @@ def login_user(
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
 ) -> TokenResponse:
     try:
-        user = auth_service.authenticate_user(
-            db, email=form_data.username, password=form_data.password
-        )
+        user = auth_service.authenticate_user(db, email=form_data.username, password=form_data.password)
     except InvalidCredentialsError as exc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

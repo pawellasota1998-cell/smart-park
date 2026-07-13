@@ -52,9 +52,7 @@ class AuthService:
     def _create_refresh_token(self, db: Session, user: User):
         jti = uuid4()
 
-        expires_at_aware = datetime.now(UTC) + timedelta(
-            days=settings.refresh_token_expire_days
-        )
+        expires_at_aware = datetime.now(UTC) + timedelta(days=settings.refresh_token_expire_days)
 
         refresh_token = create_refresh_token(
             subject=str(user.id),
@@ -107,9 +105,7 @@ class AuthService:
     def refresh_token_pair(self, db: Session, refresh_token: str) -> TokenPair:
         token_data = get_refresh_token_data(refresh_token)
         token_hash = hash_token(refresh_token)
-        stored_refresh_token = self._refresh_token_repository.get_by_jti(
-            db, token_data.jti
-        )
+        stored_refresh_token = self._refresh_token_repository.get_by_jti(db, token_data.jti)
 
         if stored_refresh_token is None:
             raise InvalidRefreshTokenError
@@ -135,9 +131,7 @@ class AuthService:
             raise InvalidRefreshTokenError
 
         try:
-            self._refresh_token_repository.revoke(
-                db, stored_refresh_token, revoked_at=utc_now_naive()
-            )
+            self._refresh_token_repository.revoke(db, stored_refresh_token, revoked_at=utc_now_naive())
 
             new_access_token = self.issue_acces_token(user)
 
@@ -162,9 +156,7 @@ class AuthService:
             refresh_token,
         )
 
-        stored_refresh_token = self._refresh_token_repository.get_by_jti(
-            db, token_data.jti
-        )
+        stored_refresh_token = self._refresh_token_repository.get_by_jti(db, token_data.jti)
 
         if stored_refresh_token is None:
             raise InvalidRefreshTokenError
@@ -196,7 +188,7 @@ class AuthService:
         except ValueError as exc:
             raise InvalidAccessTokenError from exc
 
-        user = self._repository.get_by_id(db, user_id)
+        user = self._user_repository.get_by_id(db, user_id)
 
         if user is None:
             raise InvalidAccessTokenError

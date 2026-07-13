@@ -26,9 +26,7 @@ if TYPE_CHECKING:
 class User(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(
-        Integer, Identity(start=1, increment=1), primary_key=True
-    )
+    id: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
     email: Mapped[str] = mapped_column(Unicode(255), nullable=False, unique=True)
     password_hash: Mapped[str] = mapped_column(Unicode(255), nullable=True)
     first_name: Mapped[str] = mapped_column(Unicode(100), nullable=False)
@@ -46,9 +44,7 @@ class User(Base):
         default=UserRole.USER,
         server_default=text("'USER'"),
     )
-    is_active: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=True, server_default=text("1")
-    )
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True, server_default=text("1"))
     created_at: Mapped[datetime] = mapped_column(
         DATETIME2(precision=6),
         nullable=False,

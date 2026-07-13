@@ -55,9 +55,7 @@ class Settings(BaseSettings):
             query={
                 "driver": self.db_driver,
                 "Encrypt": "yes" if self.db_encrypt else "no",
-                "TrustServerCertificate": (
-                    "yes" if self.db_trust_server_certificate else "no"
-                ),
+                "TrustServerCertificate": ("yes" if self.db_trust_server_certificate else "no"),
             },
         )
 

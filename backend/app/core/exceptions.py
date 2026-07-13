@@ -12,3 +12,15 @@ class InvalidAccessTokenError(Exception):
 
 class InvalidRefreshTokenError(Exception):
     """Raised when a refresh token is invalid, expired or revoked."""
+
+
+class ParkingApplicationNotFoundError(Exception):
+    """Raised when a parking application cannot be found."""
+
+
+class ParkingApplicationAccessDeniedError(Exception):
+    """Raised when a user tries to access someone else's application."""
+
+
+class ParkingApplicationCannotBeEditedError(Exception):
+    """Raised when an application cannot be edited in its current status."""
