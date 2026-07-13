@@ -1,18 +1,10 @@
-import re
 from datetime import datetime
 from math import ceil
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from app.core.registration_number import validate_registration_number
 from app.models.enums import ApplicationStatus
-
-REGISTRATION_NUMBER_PATTERN = re.compile(
-    r"^[A-Z0-9]{4,10}$",
-)
-
-
-def normalize_registration_number(value: str) -> str:
-    return value.strip().upper().replace(" ", "").replace("-", "")
 
 
 class ParkingApplicationCreate(BaseModel):
@@ -28,13 +20,8 @@ class ParkingApplicationCreate(BaseModel):
 
     @field_validator("registration_number")
     @classmethod
-    def validate_registration_number(cls, value: str) -> str:
-        normalized_value = normalize_registration_number(value)
-
-        if not REGISTRATION_NUMBER_PATTERN.fullmatch(normalized_value):
-            raise ValueError("Registration number must contain 4-10 letters or digits.")
-
-        return normalized_value
+    def validate_registration_number_field(cls, value: str) -> str:
+        return validate_registration_number(value)
 
 
 class ParkingApplicationUpdate(BaseModel):
@@ -52,19 +39,14 @@ class ParkingApplicationUpdate(BaseModel):
 
     @field_validator("registration_number")
     @classmethod
-    def validate_registration_number(
+    def validate_registration_number_field(
         cls,
         value: str | None,
     ) -> str | None:
         if value is None:
             return value
 
-        normalized_value = normalize_registration_number(value)
-
-        if not REGISTRATION_NUMBER_PATTERN.fullmatch(normalized_value):
-            raise ValueError("Registration number must contain 4-10 letters or digits.")
-
-        return normalized_value
+        return validate_registration_number(value)
 
 
 class ParkingApplicationRead(BaseModel):

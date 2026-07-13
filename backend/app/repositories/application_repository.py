@@ -151,3 +151,19 @@ class ParkingApplicationRepository:
         db.flush()
 
         return application
+
+    def has_approved_registration_number(
+        self,
+        db: Session,
+        *,
+        registration_number: str,
+    ) -> bool:
+        statement = (
+            select(ParkingApplication.id)
+            .where(
+                ParkingApplication.registration_number == registration_number,
+                ParkingApplication.status == ApplicationStatus.APPROVED,
+            )
+            .limit(1)
+        )
+        return db.scalar(statement) is not None
