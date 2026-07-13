@@ -9,10 +9,7 @@ def create_app() -> FastAPI:
     application = FastAPI(
         title=settings.app_name,
         summary="Parking application management API",
-        description=(
-            "REST API for managing parking space applications "
-            "in the Euro PArk residential community"
-        ),
+        description=("REST API for managing parking space applications in the Euro PArk residential community"),
         version=settings.app_version,
         docs_url="/docs",
         redoc_url="/redoc",
