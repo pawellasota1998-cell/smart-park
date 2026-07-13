@@ -24,3 +24,11 @@ class ParkingApplicationAccessDeniedError(Exception):
 
 class ParkingApplicationCannotBeEditedError(Exception):
     """Raised when an application cannot be edited in its current status."""
+
+
+class ParkingApplicationCannotBeReviewedError(Exception):
+    """Raised when an application cannot be reviewed in its current status."""
+
+
+class SupervisorCommentRequiredError(Exception):
+    """Raised when supervisor comment is required but missing."""
