@@ -20,6 +20,7 @@ from app.models.enums import UserRole
 
 if TYPE_CHECKING:
     from app.models.parking_application import ParkingApplication
+    from app.models.refresh_token import RefreshToken
 
 
 class User(Base):
@@ -65,4 +66,7 @@ class User(Base):
     reviewed_applications: Mapped[list[ParkingApplication]] = relationship(
         back_populates="reviewed_by",
         foreign_keys="ParkingApplication.reviewed_by_user_id",
+    )
+    refresh_tokens: Mapped[list[RefreshToken]] = relationship(
+        back_populates="user",
     )

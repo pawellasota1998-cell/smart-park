@@ -8,3 +8,7 @@ class InvalidCredentialsError(Exception):
 
 class InvalidAccessTokenError(Exception):
     """Raised when an access token is invalid or expired."""
+
+
+class InvalidRefreshTokenError(Exception):
+    """Raised when a refresh token is invalid, expired or revoked."""

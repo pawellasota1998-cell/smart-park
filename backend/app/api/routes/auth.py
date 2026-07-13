@@ -1,6 +1,12 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Response,
+    status,
+)
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -8,9 +14,13 @@ from app.api.dependencies.auth import get_current_user
 from app.api.dependencies.database import get_db
 from app.api.dependencies.services import get_auth_service, get_user_service
 from app.core.config import settings
-from app.core.exceptions import EmailAlreadyExistsError, InvalidCredentialsError
+from app.core.exceptions import (
+    EmailAlreadyExistsError,
+    InvalidCredentialsError,
+    InvalidRefreshTokenError,
+)
 from app.models.user import User
-from app.schemas.auth import TokenResponse
+from app.schemas.auth import RefreshTokenRequest, TokenResponse
 from app.schemas.user import UserCreate, UserRead
 from app.services.auth_service import AuthService
 from app.services.user_service import UserService
@@ -27,7 +37,7 @@ router = APIRouter(
     response_model=UserRead,
     status_code=status.HTTP_201_CREATED,
     summary="Register user",
-    description="Creates a new user account " "with the USER role.",
+    description="Creates a new user account with the USER role.",
 )
 def register(
     user_data: UserCreate,
@@ -41,10 +51,93 @@ def register(
             status_code=status.HTTP_409_CONFLICT,
             detail={
                 "code": "EMAIL_ALREADY_EXISTS",
-                "message": ("An account with this email " "already exists."),
+                "message": ("An account with this email already exists."),
             },
         ) from exc
     return UserRead.model_validate(user)
+
+
+@router.post(
+    "/refresh",
+    response_model=TokenResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Refresh token pair",
+    description=" Rotates a refresh token and returns a "
+    "new access token and refresh token.",
+)
+def refresh_token(
+    request_data: RefreshTokenRequest,
+    db: Annotated[
+        Session,
+        Depends(get_db),
+    ],
+    auth_service: Annotated[
+        AuthService,
+        Depends(get_auth_service),
+    ],
+) -> TokenResponse:
+    try:
+        token_pair = auth_service.refresh_token_pair(
+            db,
+            request_data.refresh_token,
+        )
+
+    except InvalidRefreshTokenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={
+                "code": "INVALID_REFRESH_TOKEN",
+                "message": ("Refresh token is invalid, expired or revoked."),
+            },
+            headers={
+                "WWW-Authenticate": "Bearer",
+            },
+        ) from exc
+    return TokenResponse(
+        access_token=token_pair.access_token,
+        refresh_token=token_pair.refresh_token,
+        expires_in=settings.access_token_expire_minutes * 60,
+    )
+
+
+@router.post(
+    "/logout",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Logout user",
+    description="Revokes the provided refresh token.",
+)
+def logout_user(
+    request_data: RefreshTokenRequest,
+    db: Annotated[
+        Session,
+        Depends(get_db),
+    ],
+    auth_service: Annotated[
+        AuthService,
+        Depends(get_auth_service),
+    ],
+) -> Response:
+    try:
+        auth_service.revoke_refresh_token(
+            db,
+            request_data.refresh_token,
+        )
+
+    except InvalidRefreshTokenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={
+                "code": "INVALID_REFRESH_TOKEN",
+                "message": ("Refresh token is invalid, expired or revoked."),
+            },
+            headers={
+                "WWW-Authenticate": "Bearer",
+            },
+        ) from exc
+
+    return Response(
+        status_code=status.HTTP_204_NO_CONTENT,
+    )
 
 
 @router.post(
@@ -75,10 +168,15 @@ def login_user(
             },
         ) from exc
 
-    access_token = auth_service.issue_acces_token(user)
+    token_pair = auth_service.issue_token_pair(
+        db,
+        user,
+    )
 
     return TokenResponse(
-        access_token=access_token, expires_in=settings.access_token_expire_minutes * 60
+        access_token=token_pair.access_token,
+        refresh_token=token_pair.refresh_token,
+        expires_in=settings.access_token_expire_minutes * 60,
     )
 
 
