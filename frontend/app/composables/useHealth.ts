@@ -1,5 +1,5 @@
 import type { HealthResponse, ReadinessResponse } from '~/types/api'
-import { useApiUrl } from './useApiUrl'
+import { useApiUrl } from './useApi'
 
 export function useHealth() {
   const getHealth = () => {

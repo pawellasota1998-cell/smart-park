@@ -12,17 +12,17 @@
 
       <div class="mt-6 flex gap-3">
         <NuxtLink
-          to="/health"
-          class="rounded-3xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
+          to="/dashboard"
+          class="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
         >
-          Sprawdź API
+          Przejdź do panelu
         </NuxtLink>
 
         <NuxtLink
-          to="/login"
-          class="rounded-3xl border px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100"
+          to="/health"
+          class="rounded-lg border px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100"
         >
-          Przejdź do logowania
+          Sprawdź API
         </NuxtLink>
       </div>
     </div>
