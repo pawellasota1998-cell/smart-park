@@ -19,9 +19,16 @@ in the Euro Park residential community.
 
 ### Frontend
 
-- Nuxt
+- Nuxt 4.4.8
 - Vue 3
 - TypeScript
+
+### Install dependencies
+
+```powershell
+cd frontend
+npm install
+```
 
 ### DevOps
 
