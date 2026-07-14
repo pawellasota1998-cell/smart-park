@@ -36,6 +36,23 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 15
     refresh_token_expire_days: int = 7
 
+    log_level: Literal[
+        "DEBUG",
+        "INFO",
+        "WARNING",
+        "ERROR",
+        "CRITICAL",
+    ] = "INFO"
+    cors_allowed_origins: str = "http://localhost:3000,http://localhost:3001"
+
+    @property
+    def cors_origins(self) -> list[str]:
+        return [origin.strip() for origin in self.cors_allowed_origins.split(",") if origin.strip()]
+
+    rate_limit_enabled: bool = True
+    barrier_rate_limit_requests: int = 60
+    barrier_rate_limit_window_seconds: int = 60
+
     model_config = SettingsConfigDict(
         env_file=PROJECT_ROOT / ".env",
         env_file_encoding="utf-8",
