@@ -91,7 +91,7 @@ async function submitCheckAccess() {
         <button
           type="submit"
           :disabled="pending"
-          class="w-full rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+          class="w-full rounded-lg bg-gray-400 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {{ pending ? 'Sprawdzanie...' : 'Sprawdź dostęp' }}
         </button>
