@@ -17,7 +17,7 @@ await fetchCurrentUser()
 
           <NuxtLink to="/barrier" class="text-slate-700 hover:text-slate-950"> Szlaban </NuxtLink>
           <NuxtLink
-            v-if="isAuthenticated"
+            v-if="currentUser?.role === 'USER'"
             to="/dashboard"
             class="text-slate-700 hover:text-slate-950"
           >
