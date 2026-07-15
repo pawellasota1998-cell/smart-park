@@ -187,6 +187,26 @@ GET /api/v1/health
 GET /api/v1/health/ready
 ````
 
+## Demo accounts
+
+Create or update demo users:
+
+```powershell
+cd backend
+python -m scripts.seed_demo_users
+```
+User account:
+````
+email: user@example.com
+password: Password123!
+````
+
+Supervisor account:
+````
+email: supervisor@example.com
+password: Password123!
+````
+
 ## Demo flow
 
 1. Register a regular user.

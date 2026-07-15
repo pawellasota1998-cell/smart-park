@@ -1,0 +1,59 @@
+export type ApplicationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'NEEDS_CHANGES'
+
+export type ParkingApplicationRead = {
+  id: number
+  user_id: number
+  registration_number: string
+  preferred_floor: number
+  status: ApplicationStatus
+  supervisor_comment: string | null
+  reviewed_by_user_id: number | null
+  reviewed_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type ParkingApplicationCreatePayload = {
+  registration_number: string
+  preferred_floor: number
+}
+
+export type ParkingApplicationUpdatePayload = {
+  registration_number?: string
+  preferred_floor?: number
+}
+
+export const editableApplicationStatuses: ApplicationStatus[] = ['PENDING', 'NEEDS_CHANGES']
+
+export function canEditApplication(application: ParkingApplicationRead): boolean {
+  return editableApplicationStatuses.includes(application.status)
+}
+
+export type PaginationMeta = {
+  page: number
+  page_size: number
+  total_items: number
+  total_pages: number
+}
+
+export type ParkingApplicationPage = {
+  items: ParkingApplicationRead[]
+  pagination: PaginationMeta
+}
+
+export type SupervisorApplicationsFilters = {
+  status?: ApplicationStatus | ''
+  registration_number?: string
+  page: number
+  page_size: number
+  sort_by: 'created_at' | 'status' | 'registration_number' | 'preferred_floor'
+  sort_order: 'asc' | 'desc'
+}
+
+export type SupervisorDecisionPayload = {
+  supervisor_comment?: string | null
+}
+
+export type SupervisorRequestChangesPayload = {
+  supervisor_comment: string
+}
