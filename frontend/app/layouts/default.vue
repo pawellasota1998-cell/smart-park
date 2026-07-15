@@ -22,6 +22,13 @@ await fetchCurrentUser()
           >
             Panel
           </NuxtLink>
+          <NuxtLink
+            v-if="currentUser?.role === 'SUPERVISOR' || currentUser?.role === 'ADMIN'"
+            to="/supervisor/applications"
+            class="text-slate-700 hover:text-slate-950"
+          >
+            Supervisor
+          </NuxtLink>
 
           <NuxtLink v-if="!isAuthenticated" to="/login" class="text-slate-700 hover:text-slate-950">
             Logowanie

@@ -28,3 +28,32 @@ export const editableApplicationStatuses: ApplicationStatus[] = ['PENDING', 'NEE
 export function canEditApplication(application: ParkingApplicationRead): boolean {
   return editableApplicationStatuses.includes(application.status)
 }
+
+export type PaginationMeta = {
+  page: number
+  page_size: number
+  total_items: number
+  total_pages: number
+}
+
+export type ParkingApplicationPage = {
+  items: ParkingApplicationRead[]
+  pagination: PaginationMeta
+}
+
+export type SupervisorApplicationsFilters = {
+  status?: ApplicationStatus | ''
+  registration_number?: string
+  page: number
+  page_size: number
+  sort_by: 'created_at' | 'status' | 'registration_number' | 'preferred_floor'
+  sort_order: 'asc' | 'desc'
+}
+
+export type SupervisorDecisionPayload = {
+  supervisor_comment?: string | null
+}
+
+export type SupervisorRequestChangesPayload = {
+  supervisor_comment: string
+}
