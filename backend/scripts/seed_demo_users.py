@@ -5,7 +5,6 @@ from app.db.session import SessionLocal
 from app.models.enums import UserRole
 from app.models.user import User
 
-
 DEMO_USERS = [
     {
         "email": "user@example.com",

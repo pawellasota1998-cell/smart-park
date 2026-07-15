@@ -14,7 +14,10 @@ export function useApiUrl(path: string): string {
 }
 
 export function useApiClient() {
-  const accessToken = useCookie<string | null>('euro_park_access_token')
+  const accessToken = useCookie<string | null>('euro_park_access_token', {
+    sameSite: 'lax',
+    maxAge: 60 * 15,
+  })
 
   const apiFetch = async <T>(path: string, options: ApiRequestOptions = {}) => {
     const headers = new Headers(options.headers)

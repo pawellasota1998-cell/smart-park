@@ -62,8 +62,10 @@ const reviewedAt = computed(() => {
     </dl>
 
     <UiBaseAlert v-if="application.supervisor_comment" variant="info" class="mt-4">
-      <span class="font-semibold">Komentarz nadzorcy:</span>
-      {{ application.supervisor_comment }}
+      <div class="flex items-start justify-between gap-4">
+        <span class="font-semibold">Komentarz nadzorcy:</span>
+        {{ application.supervisor_comment }}
+      </div>
     </UiBaseAlert>
 
     <div class="mt-5 flex justify-end">
