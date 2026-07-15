@@ -33,7 +33,7 @@ function refreshAll() {
 
       <button
         type="button"
-        class="rounded-3xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
+        class="rounded-xl bg-gray-400 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-500"
         @click="refreshAll"
       >
         Odśwież
