@@ -25,27 +25,32 @@ Copy-Item .env.example .env
 ```
 
 ### Default API URL:
-````http
+
+```http
 NUXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/api/v1
-````
+```
 
 ### Install Dependencies
+
 ```powershell
 npm install
 ```
+
 ### Run Development Server
+
 ```powershell
 npm run dev
 ```
 
 Frontend will be available at:
-````http
+
+```http
 http://localhost:3000
-````
+```
 
 ## Main Routes
 
-````text
+```text
 /                           Home page
 /health                     Backend health check
 /login                      User login
@@ -53,9 +58,10 @@ http://localhost:3000
 /dashboard                  User dashboard
 /supervisor/applications    Supervisor panel
 /barrier                    Barrier access check
-````
+```
 
 ## User Applications
+
 The user dashboard allows authenticated users to:
 
 - create parking applications,
@@ -65,6 +71,7 @@ The user dashboard allows authenticated users to:
 - see application statuses.
 
 ## Supervisor Panel
+
 The supervisor panel allows users with SUPERVISOR or ADMIN role to:
 
 - list parking applications,
@@ -80,20 +87,24 @@ The supervisor panel allows users with SUPERVISOR or ADMIN role to:
 
 The frontend includes a public barrier access screen:
 
-````http
+```http
 /barrier
-````
+```
+
 It allows checking whether a vehicle registration number has access to the parking area.
 
 Access is granted only when there is an approved parking application for the provided registration number.
 
 ### Quality Checks
+
 ```powershell
 npm run lint
 npm run format:check
 npm run build
 ```
+
 To format files:
+
 ```powershell
 npm run format
 ```
