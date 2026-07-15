@@ -15,6 +15,7 @@ await fetchCurrentUser()
 
           <NuxtLink to="/health" class="text-slate-700 hover:text-slate-950"> API Health </NuxtLink>
 
+          <NuxtLink to="/barrier" class="text-slate-700 hover:text-slate-950"> Szlaban </NuxtLink>
           <NuxtLink
             v-if="isAuthenticated"
             to="/dashboard"

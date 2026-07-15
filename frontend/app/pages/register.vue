@@ -51,13 +51,13 @@ async function submitRegister() {
 
       <p class="mt-2 text-sm text-slate-600">Utwórz konto użytkownika Euro Park.</p>
 
-      <BaseAlert v-if="errorMessage" variant="error" class="mt-6">
+      <UiBaseAlert v-if="errorMessage" variant="error" class="mt-6">
         {{ errorMessage }}
-      </BaseAlert>
+      </UiBaseAlert>
 
-      <BaseAlert v-if="successMessage" variant="success" class="mt-6">
+      <UiBaseAlert v-if="successMessage" variant="success" class="mt-6">
         {{ successMessage }}
-      </BaseAlert>
+      </UiBaseAlert>
 
       <form class="mt-6 space-y-4" @submit.prevent="submitRegister">
         <div>

@@ -30,13 +30,6 @@ def create_app() -> FastAPI:
         },
     )
     application.add_middleware(
-        CORSMiddleware,
-        allow_origins=settings.cors_origins,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
-    application.add_middleware(
         BarrierRateLimitMiddleware,
         enabled=settings.rate_limit_enabled,
         path=(f"{settings.api_v1_prefix}" "/barrier/check-access"),
@@ -46,6 +39,14 @@ def create_app() -> FastAPI:
     application.add_middleware(
         RequestIdMiddleware,
     )
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.cors_origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
     register_exception_handlers(application)
 
     application.include_router(api_router, prefix=settings.api_v1_prefix)

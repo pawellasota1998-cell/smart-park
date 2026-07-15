@@ -61,10 +61,10 @@ const reviewedAt = computed(() => {
       </div>
     </dl>
 
-    <BaseAlert v-if="application.supervisor_comment" variant="info" class="mt-4">
+    <UiBaseAlert v-if="application.supervisor_comment" variant="info" class="mt-4">
       <span class="font-semibold">Komentarz nadzorcy:</span>
       {{ application.supervisor_comment }}
-    </BaseAlert>
+    </UiBaseAlert>
 
     <div class="mt-5 flex justify-end">
       <button

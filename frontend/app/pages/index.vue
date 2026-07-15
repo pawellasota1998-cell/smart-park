@@ -17,7 +17,12 @@
         >
           Przejdź do panelu
         </NuxtLink>
-
+        <NuxtLink
+          to="/barrier"
+          class="rounded-lg border px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100"
+        >
+          Sprawdź szlaban
+        </NuxtLink>
         <NuxtLink
           to="/health"
           class="rounded-lg border px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100"

@@ -79,12 +79,12 @@ function cancelEditing() {
       </p>
     </div>
 
-    <BaseAlert v-if="errorMessage" variant="error">
+    <UiBaseAlert v-if="errorMessage" variant="error">
       {{ errorMessage }}
-    </BaseAlert>
-    <BaseAlert v-if="successMessage" variant="success">
+    </UiBaseAlert>
+    <UiBaseAlert v-if="successMessage" variant="success">
       {{ successMessage }}
-    </BaseAlert>
+    </UiBaseAlert>
 
     <div class="grid gap-6 lg:grid-cols-[380px_1fr]">
       <aside class="space-y-6">

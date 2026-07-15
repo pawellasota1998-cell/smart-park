@@ -117,13 +117,13 @@ function canReview(application: ParkingApplicationRead) {
         Przeglądaj, filtruj i rozpatruj wnioski mieszkańców.
       </p>
     </div>
-    <BaseAlert v-if="errorMessage" variant="error">
+    <UiBaseAlert v-if="errorMessage" variant="error">
       {{ errorMessage }}
-    </BaseAlert>
+    </UiBaseAlert>
 
-    <BaseAlert v-if="successMessage" variant="success">
+    <UiBaseAlert v-if="successMessage" variant="success">
       {{ successMessage }}
-    </BaseAlert>
+    </UiBaseAlert>
     <div class="rounded-2xl border bg-white p-6 shadow-sm">
       <h2 class="text-lg font-semibold text-slate-950">Filtry</h2>
       <div class="mt-5 grid gap-4 md:grid-cols-4">
