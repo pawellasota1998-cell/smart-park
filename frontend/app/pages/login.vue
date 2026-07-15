@@ -3,7 +3,7 @@ definePageMeta({
   middleware: 'guest',
 })
 
-const { login } = useAuth()
+const { currentUser, login } = useAuth()
 const { getErrorMessage } = useApiError()
 
 const form = reactive({
@@ -23,8 +23,11 @@ async function submitLogin() {
       email: form.email,
       password: form.password,
     })
-
-    await navigateTo('/dashboard')
+    if (currentUser.value?.role === 'SUPERVISOR' || currentUser.value?.role === 'ADMIN') {
+      await navigateTo('/supervisor/applications')
+    } else {
+      await navigateTo('/dashboard')
+    }
   } catch (error) {
     errorMessage.value = getErrorMessage(error)
   } finally {
